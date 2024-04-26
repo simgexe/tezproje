@@ -1,43 +1,45 @@
 import React from 'react';
-import { View, Button, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
-  return (
+ return (
     <View style={styles.container}>
-      <Button
-        title="Manuel Hesaplayıcı"
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => navigation.navigate('Calculator')}
-        color="black" // Buton rengi lightseagreen
-        backgroundColor="lightseagreen"
-        style={styles.button} // Buton stilini uygula
-      />
-      <Button
-        title="Graf Okuyucu"
+      >
+        <Text style={[styles.buttonText, {fontSize: 17}]}>Manuel Hesaplayıcı</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => navigation.navigate('GraphReader')}
-        color="black"
-        backgroundColor="lightseagreen" // Buton rengi lightseagreen
-        style={styles.button} // Buton stilini uygula
-      />
+      >
+        <Text style={[styles.buttonText, {fontSize: 18}]}>Graf Okuyucu</Text>
+      </TouchableOpacity>
     </View>
-  );
+ );
 };
 
 const styles = StyleSheet.create({
-  container: {
+ container: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    backgroundColor: 'oldlace', // Sayfa arkaplan rengi oldlace
-  },
-  button: {
-    backgroundColor:'lightseagreen',
-    marginVertical: 10, 
-    borderRadius:7,
-    padding:10,
+    backgroundColor: 'oldlace',
+ },
+ button: {
+    backgroundColor: '#3C8182',
+    marginVertical: 10,
+    borderRadius: 7,
+    padding: 10,
     marginTop: 20,
-    alignItems:'center',
-  },
+    alignItems: 'center',
+ },
+ buttonText: {
+    color: '#333',
+    textAlign: 'center',
+ },
 });
 
 export default HomeScreen;
