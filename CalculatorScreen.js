@@ -57,7 +57,7 @@ const CalculatorScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <TextInput
-        style={styles.input}
+        style={styles.inputd}
         placeholder="Düğüm Sayısını Giriniz"
         value={nodeCount}
         onChangeText={handleNodeCountChange}
@@ -86,6 +86,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: 5,
     textAlign: 'center',
+  },
+  inputd: {
+    width: '80%',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: 'lightgray',
   },
   row: {
     flexDirection: 'row',

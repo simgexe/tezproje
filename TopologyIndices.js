@@ -11,7 +11,7 @@ const TopologyIndices = ({ navigation }) => {
           style={styles.button}
           onPress={() => {}}
         >
-          <Text style={[styles.buttonText, {fontSize: 10}]}>Hyper-Wiener</Text>
+          <Text style={[styles.buttonText, {fontSize: 10}]}>Wiener</Text>
         </TouchableOpacity>
         <View style={styles.space} />
         <TouchableOpacity
