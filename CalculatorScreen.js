@@ -6,42 +6,41 @@ const CalculatorScreen = ({ navigation }) => {
   const [matrixInput, setMatrixInput] = useState([]);
 
   const handleNodeCountChange = (text) => {
-    setNodeCount(text);
-    setMatrixInput([]); // Düğüm sayısı değiştiğinde matrisi sıfırla
+    const count = parseInt(text);
+    setNodeCount(count);
+    setMatrixInput(Array.from({ length: count }, () => Array(count).fill('')));
   };
 
   const handleMatrixInputChange = (text, rowIndex, colIndex) => {
     let updatedMatrix = [...matrixInput];
-    updatedMatrix[rowIndex] = updatedMatrix[rowIndex] || [];
-    updatedMatrix[rowIndex][colIndex] = text;
+    updatedMatrix[rowIndex][colIndex] = parseFloat(text);
     setMatrixInput(updatedMatrix);
   };
 
   const handleCalculate = () => {
-    // Hesaplama işlemleri burada yapılacak
     console.log("Düğüm Sayısı:", nodeCount);
     console.log("Komşuluk Matrisi:", matrixInput);
-  
+
     let matrixString = matrixInput.map(row => row.join(' ')).join('\n');
     alert(matrixString);
   };
-  
 
   const navigateToTopologyIndices = () => {
-    navigation.navigate('TopologyIndices'); // 'TopologyIndices' isimli diğer sayfaya yönlendirme
+    navigation.navigate('TopologyIndices', { matrixInput: matrixInput });
   };
 
   const renderMatrixInput = () => {
     let inputs = [];
-    for (let i = 0; i < parseInt(nodeCount); i++) {
+    for (let i = 0; i < nodeCount; i++) {
       let row = [];
-      for (let j = 0; j < parseInt(nodeCount); j++) {
+      for (let j = 0; j < nodeCount; j++) {
         row.push(
           <TextInput
             key={`${i}-${j}`}
             style={styles.input}
             keyboardType="numeric"
             onChangeText={(text) => handleMatrixInputChange(text, i, j)}
+            value={matrixInput[i][j].toString()}
           />
         );
       }
@@ -59,11 +58,11 @@ const CalculatorScreen = ({ navigation }) => {
       <TextInput
         style={styles.inputd}
         placeholder="Düğüm Sayısını Giriniz"
-        value={nodeCount}
+        value={nodeCount.toString()}
         onChangeText={handleNodeCountChange}
         keyboardType="numeric"
       />
-      {parseInt(nodeCount) > 0 && renderMatrixInput()}
+      {nodeCount > 0 && renderMatrixInput()}
       <TouchableOpacity style={styles.button} onPress={handleCalculate}>
         <Text style={styles.buttonText}>Komşuluk Matrisini Göster</Text>
       </TouchableOpacity>
@@ -84,7 +83,11 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
     margin: 5,
+    width: 40,
     textAlign: 'center',
   },
   inputd: {

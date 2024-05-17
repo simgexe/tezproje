@@ -11,7 +11,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Çalış Köle.App.js' }} />
+        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Ana Ekran' }} />
         <Stack.Screen name="Calculator" component={CalculatorScreen} options={{ title: 'Manuel Hesaplayıcı' }} />
         <Stack.Screen name="TopologyIndices" component={TopologyIndices} options={{ title: 'Topology Indices' }} /> 
       </Stack.Navigator>
