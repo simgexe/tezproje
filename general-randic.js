@@ -1,7 +1,6 @@
-// general-randic-connectivity.js
 import { derece } from './derece';
 
-function generalrandicconnectivity(matrixInput, alfa) {
+ function generalrandicconnectivity(matrixInput, alfa) {
   const nodeCount = matrixInput.length;
   const temp = derece(matrixInput);
   let sonuc = 0;

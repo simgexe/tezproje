@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
 
 const CalculatorScreen = ({ navigation }) => {
   const [nodeCount, setNodeCount] = useState('');
   const [matrixInput, setMatrixInput] = useState([]);
+  const [alfa, setAlfa] = useState('');
 
   const handleNodeCountChange = (text) => {
     const count = parseInt(text);
@@ -13,7 +14,7 @@ const CalculatorScreen = ({ navigation }) => {
 
   const handleMatrixInputChange = (text, rowIndex, colIndex) => {
     let updatedMatrix = [...matrixInput];
-    updatedMatrix[rowIndex][colIndex] = parseFloat(text);
+    updatedMatrix[rowIndex][colIndex] = parseFloat(text) || 0;
     setMatrixInput(updatedMatrix);
   };
 
@@ -22,11 +23,16 @@ const CalculatorScreen = ({ navigation }) => {
     console.log("Komşuluk Matrisi:", matrixInput);
 
     let matrixString = matrixInput.map(row => row.join(' ')).join('\n');
-    alert(matrixString);
+    Alert.alert('Komşuluk Matrisi', matrixString);
   };
 
   const navigateToTopologyIndices = () => {
-    navigation.navigate('TopologyIndices', { matrixInput: matrixInput });
+    const alfaValue = parseFloat(alfa);
+    if (nodeCount <= 0 || matrixInput.some(row => row.some(cell => isNaN(cell))) || isNaN(alfaValue)) {
+      Alert.alert('Hata', 'Lütfen geçerli bir düğüm sayısı, matris değerleri ve alfa değeri giriniz.');
+      return;
+    }
+    navigation.navigate('TopologyIndices', { matrixInput: matrixInput, alfa: alfaValue });
   };
 
   const renderMatrixInput = () => {
@@ -63,6 +69,13 @@ const CalculatorScreen = ({ navigation }) => {
         keyboardType="numeric"
       />
       {nodeCount > 0 && renderMatrixInput()}
+      <TextInput
+        style={styles.inputd}
+        placeholder="Alfa Değerini Giriniz"
+        value={alfa}
+        onChangeText={text => setAlfa(text.replace(/[^0-9.]/g, ''))} // Allow only numeric input
+        keyboardType="numeric"
+      />
       <TouchableOpacity style={styles.button} onPress={handleCalculate}>
         <Text style={styles.buttonText}>Komşuluk Matrisini Göster</Text>
       </TouchableOpacity>

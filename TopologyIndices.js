@@ -1,104 +1,95 @@
-// TopologyIndices.js
 import React from 'react';
 import { View, TouchableOpacity, Text, StyleSheet, Alert, ScrollView } from 'react-native';
 import wiener from './wiener';
 import hyperwiener from './hyper-wiener';
 import randicconnectivity from './randic-connectivity';
 import generalrandicconnectivity from './general-randic';
+import generalsumconnectivity from './general-sum';
+import firstzagreb from './first-zagreb';
+import secondzagreb from './second-zagreb';
+import atombondconnectivity from './atom-bond-connectivity';
+import geometricarithmetic from './geometric-arithmetic'; 
+import eccentricconnectivity from './eccentric-connectivity'; 
+import modifiedEccentricConnectivity from './modified-eccentric';
+import totalEccentricity from './total-eccentricity';
+import firstZagrebEccentricity from './first-zagreb-eccentricity';
+import secondZagrebEccentricity from './second-zagreb-eccentricity';
+import thirdZagrebEccentricity from './third-zagreb-eccentricity';
+import averageEccentricity from './average-eccentricity';
 
 const TopologyIndices = ({ route }) => {
-  const { matrixInput } = route.params;
+  const { matrixInput, alfa } = route.params;
 
-  const handleWienerPress = () => {
+  const handlePress = (calculateFunction, indexName) => {
     if (!matrixInput || matrixInput.length === 0) {
       Alert.alert('Hata', 'Matris verisi eksik veya hatalı.');
       return;
     }
 
-    const sonuc = wiener(matrixInput);
-    Alert.alert('Wiener İndeksi', `Sonuç: ${sonuc}`);
+    const sonuc = calculateFunction(matrixInput);
+    Alert.alert(`${indexName} İndeksi`, `Sonuç: ${sonuc}`);
+  };
+  const handleRandicCalculation = () => {
+    const sonuc = generalrandicconnectivity(matrixInput, alfa);
+    Alert.alert('General Randic İndeksi', `Sonuc: ${sonuc}`);
   };
 
-  const handleHyperWienerPress = () => {
-    if (!matrixInput || matrixInput.length === 0) {
-      Alert.alert('Hata', 'Matris verisi eksik veya hatalı.');
-      return;
-    }
-
-    const sonuc = hyperwiener(matrixInput);
-    Alert.alert('Hyper Wiener İndeksi', `Sonuç: ${sonuc}`);
-  };
-
-  const handleRandicConnectivityPress = () => {
-    if (!matrixInput || matrixInput.length === 0) {
-      Alert.alert('Hata', 'Matris verisi eksik veya hatalı.');
-      return;
-    }
-
-    const sonuc = randicconnectivity(matrixInput);
-    Alert.alert('Randić Connectivity İndeksi', `Sonuç: ${sonuc}`);
-  };
-  const handleGeneralRandicConnectivityPress = () => {
-    if (!matrixInput || matrixInput.length === 0) {
-      Alert.alert('Hata', 'Matris verisi eksik veya hatalı.');
-      return;
-    }
-
-    const sonuc = generalrandicconnectivity(matrixInput);
-    Alert.alert('General Randic Connectivity İndeksi', `Sonuç: ${sonuc}`);
+  const handleSumCalculation = () => {
+    const sonuc = generalsumconnectivity(matrixInput, alfa);
+    Alert.alert('General Sum İndeksi', `Sonuc: ${sonuc}`);
   };
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.column}>
-          <TouchableOpacity style={styles.button} onPress={handleWienerPress}>
+          <TouchableOpacity style={styles.button} onPress={() => handlePress(wiener, 'Wiener')}>
             <Text style={styles.buttonText}>Wiener</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleHyperWienerPress}>
+          <TouchableOpacity style={styles.button} onPress={() => handlePress(hyperwiener, 'Hyper Wiener')}>
             <Text style={styles.buttonText}>Hyper Wiener</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleRandicConnectivityPress}>
+          <TouchableOpacity style={styles.button} onPress={() => handlePress(randicconnectivity, 'Randic Connectivity')}>
             <Text style={styles.buttonText}>Randic Connectivity</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleGeneralRandicConnectivityPress}>
+          <TouchableOpacity style={styles.button} onPress={handleRandicCalculation}>
             <Text style={styles.buttonText}>General Randic Connectivity</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity style={styles.button} onPress={handleSumCalculation}>
             <Text style={styles.buttonText}>General Sum Connectivity</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity style={styles.button} onPress={() => handlePress(firstzagreb, 'First Zagreb')}>
             <Text style={styles.buttonText}>First Zagreb</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity style={styles.button} onPress={() => handlePress(secondzagreb, 'Second Zagreb')}>
             <Text style={styles.buttonText}>Second Zagreb</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity style={styles.button} onPress={() => handlePress(atombondconnectivity, 'Atom Bond Connectivity')}>
             <Text style={styles.buttonText}>Atom Bond Connectivity</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.column}>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity style={styles.button} onPress={() => handlePress(geometricarithmetic, 'Geometric-Arithmetic')}>
             <Text style={styles.buttonText}>Geometric-Arithmetic</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity style={styles.button} onPress={() => handlePress(eccentricconnectivity, 'Eccentric Connectivity')}>
             <Text style={styles.buttonText}>Eccentric Connectivity</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity style={styles.button} onPress={() => handlePress(modifiedEccentricConnectivity, 'Modified Eccentric Connectivity')}>
             <Text style={styles.buttonText}>Modified Eccentric Connectivity</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity style={styles.button} onPress={() => handlePress(totalEccentricity, 'Total Eccentricity')}>
             <Text style={styles.buttonText}>Total Eccentricity</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity style={styles.button} onPress={() => handlePress(firstZagrebEccentricity, 'First Zagreb Eccentricity')}>
             <Text style={styles.buttonText}>First Zagreb Eccentricity</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity style={styles.button} onPress={() => handlePress(secondZagrebEccentricity, 'Second Zagreb Eccentricity')}>
             <Text style={styles.buttonText}>Second Zagreb Eccentricity</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity style={styles.button} onPress={() => handlePress(thirdZagrebEccentricity, 'Third Zagreb Eccentricity')}>
             <Text style={styles.buttonText}>Third Zagreb Eccentricity</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity style={styles.button} onPress={() => handlePress(averageEccentricity, 'Average Eccentricity')}>
             <Text style={styles.buttonText}>Average Eccentricity</Text>
           </TouchableOpacity>
         </View>
