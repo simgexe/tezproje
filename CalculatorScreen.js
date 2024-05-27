@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, Image } from 'react-native';
 
 const CalculatorScreen = ({ navigation }) => {
   const [nodeCount, setNodeCount] = useState('');
@@ -32,7 +32,7 @@ const CalculatorScreen = ({ navigation }) => {
       Alert.alert('Hata', 'Lütfen geçerli bir düğüm sayısı, matris değerleri ve alfa değeri giriniz.');
       return;
     }
-    navigation.navigate('TopologyIndices', { matrixInput: matrixInput, alfa: alfaValue });
+    navigation.navigate('Topolojik İndeksler', { matrixInput: matrixInput, alfa: alfaValue });
   };
 
   const renderMatrixInput = () => {
@@ -61,27 +61,36 @@ const CalculatorScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.inputd}
-        placeholder="Düğüm Sayısını Giriniz"
-        value={nodeCount.toString()}
-        onChangeText={handleNodeCountChange}
-        keyboardType="numeric"
-      />
-      {nodeCount > 0 && renderMatrixInput()}
-      <TextInput
-        style={styles.inputd}
-        placeholder="Alfa Değerini Giriniz"
-        value={alfa}
-        onChangeText={text => setAlfa(text.replace(/[^0-9.]/g, ''))} // Allow only numeric input
-        keyboardType="numeric"
-      />
-      <TouchableOpacity style={styles.button} onPress={handleCalculate}>
-        <Text style={styles.buttonText}>Komşuluk Matrisini Göster</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={navigateToTopologyIndices}>
-        <Text style={styles.buttonText}>Hesaplanacak topolojik indeksi seçiniz</Text>
-      </TouchableOpacity>
+      <View style={styles.header}>
+        <Image 
+          source={require('./logo.png')} 
+          style={styles.headerImage} 
+        />
+      </View>
+      <View style={styles.body}>
+        <TextInput
+          style={styles.inputd}
+          placeholder="Düğüm Sayısını Giriniz"
+          value={nodeCount.toString()}
+          onChangeText={handleNodeCountChange}
+          keyboardType="numeric"
+        />
+        {nodeCount > 0 && renderMatrixInput()}
+        <TextInput
+          style={styles.inputd}
+          placeholder="Alfa Değerini Giriniz"
+          value={alfa}
+          onChangeText={text => setAlfa(text.replace(/[^0-9.]/g, ''))}
+          keyboardType="number-pad"
+          returnKeyType="done"
+        />
+        <TouchableOpacity style={styles.button} onPress={handleCalculate}>
+          <Text style={styles.buttonText}>Komşuluk Matrisini Göster</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={navigateToTopologyIndices}>
+          <Text style={styles.buttonText}>Hesaplanacak topolojik indeksi seçiniz</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -89,12 +98,28 @@ const CalculatorScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  header: {
+    height: 60,
+    backgroundColor: 'rgba(60,129,130,0.65)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomLeftRadius:20,
+    borderBottomRightRadius:20,
+  },
+  headerImage: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
+  },
+  body: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   input: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
@@ -104,7 +129,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   inputd: {
-    width: '80%',
+    width: '60%',
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 15,
@@ -116,7 +141,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   button: {
-    backgroundColor: 'lightseagreen',
+    backgroundColor: 'rgba(60,129,130,0.65)',
     padding: 15,
     borderRadius: 10,
     marginVertical: 10,

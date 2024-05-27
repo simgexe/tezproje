@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Alert, ScrollView } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, Alert, ScrollView, Image } from 'react-native';
 import wiener from './wiener';
 import hyperwiener from './hyper-wiener';
 import randicconnectivity from './randic-connectivity';
@@ -29,17 +29,25 @@ const TopologyIndices = ({ route }) => {
     const sonuc = calculateFunction(matrixInput);
     Alert.alert(`${indexName} İndeksi`, `Sonuç: ${sonuc}`);
   };
+
   const handleRandicCalculation = () => {
     const sonuc = generalrandicconnectivity(matrixInput, alfa);
-    Alert.alert('General Randic İndeksi', `Sonuc: ${sonuc}`);
+    Alert.alert('General Randic İndeksi', `Sonuç: ${sonuc}`);
   };
 
   const handleSumCalculation = () => {
     const sonuc = generalsumconnectivity(matrixInput, alfa);
-    Alert.alert('General Sum İndeksi', `Sonuc: ${sonuc}`);
+    Alert.alert('General Sum İndeksi', `Sonuç: ${sonuc}`);
   };
+
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <Image 
+          source={require('./logo.png')} // Görselin doğru yolu burada olmalı
+          style={styles.headerImage} 
+        />
+      </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.column}>
           <TouchableOpacity style={styles.button} onPress={() => handlePress(wiener, 'Wiener')}>
@@ -101,7 +109,19 @@ const TopologyIndices = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'oldlace',
+  },
+  header: {
+    height: 80,
+    backgroundColor: 'rgba(60, 129, 130, 0.65)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomLeftRadius:20,
+    borderBottomRightRadius:20,
+  },
+  headerImage: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
   },
   scrollContainer: {
     flexDirection: 'row',
@@ -116,7 +136,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   button: {
-    backgroundColor: '#3C8182',
+    backgroundColor: 'rgba(60, 129, 130, 0.65)', 
     borderRadius: 20,
     padding: 10,
     minWidth: 150,
